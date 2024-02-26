@@ -15,7 +15,7 @@ contract DeployTest is BaseTest {
     ExpectDeployment[] internal expected;
 
     function setUp() external {
-        expected.push(ExpectDeployment("AccountSetup.sol", 0x0b0f227Ba880F5781a40e05AeA3981D9bc4260FE));
+        expected.push(ExpectDeployment("VotesContainer.sol", 0x15339185c3f1ebc077b2ED720FD911Ac1F084F6F));
     }
 
     function test_deploy() external {

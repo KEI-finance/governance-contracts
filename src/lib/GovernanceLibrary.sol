@@ -2,9 +2,9 @@
 
 pragma solidity >=0.8.0;
 
-import "@openzeppelin/contracts/proxy/Clones.sol";
+import {Clones} from "@openzeppelin/contracts/proxy/Clones.sol";
 
-import "./IVotesContainer.sol";
+import {IVotesContainer} from "../VotesContainer/IVotesContainer.sol";
 
 library GovernanceLibrary {
     address internal constant CONTAINER_IMPLEMENTATION = 0x0DCd0F06cc37aece7dcbEB035A8bd5AdDA16bFd1;
