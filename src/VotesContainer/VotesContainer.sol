@@ -15,18 +15,6 @@ contract VotesContainer is IVotesContainer, OwnableUpgradeable {
         __Context_init_unchained();
     }
 
-    function getVotes(address token) external view override returns (uint256) {
-        return IVotes(token).getVotes(address(this));
-    }
-
-    function getPastVotes(address token, uint256 timepoint) external view override returns (uint256) {
-        return IVotes(token).getPastVotes(address(this), timepoint);
-    }
-
-    function delegates(address token) external view override returns (address) {
-        return IVotes(token).delegates(address(this));
-    }
-
     function delegate(address token, address target) external override onlyOwner {
         IVotes(token).delegate(target);
     }

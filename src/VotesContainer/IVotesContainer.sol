@@ -8,22 +8,6 @@ interface IVotesContainer {
     /// @notice Initializes the contract
     function initialize() external;
 
-    /// @notice Returns the number of votes of a given token
-    /// @param token The token whose votes to return
-    /// @return The number of votes
-    function getVotes(address token) external view returns (uint256);
-
-    /// @notice Returns the number of votes of a given token at a certain block
-    /// @param token The token whose votes to return
-    /// @param blockNumber The block at which to check the votes
-    /// @return The number of votes
-    function getPastVotes(address token, uint256 blockNumber) external view returns (uint256);
-
-    /// @notice Returns the delegate of a token
-    /// @param token The token whose delegate to return
-    /// @return The delegate's address
-    function delegates(address token) external view returns (address);
-
     /// @notice Delegates a token to a target address
     /// @param token The token to delegate
     /// @param target The target address to delegate to
