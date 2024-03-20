@@ -12,6 +12,7 @@ contract DeployScript is BaseScript {
         vm.startBroadcast(deployer);
 
         deploy("VotesContainer.sol");
+        deploy("VotesContainerCompat.sol");
 
         //        RedeemableCard card = RedeemableCard(deploy("RedeemableCard.sol", abi.encode(deployer), false));
         //        ConsumableProvider provider = ConsumableProvider(deploy("ConsumableProvider.sol", abi.encode(deployer)));
