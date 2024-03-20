@@ -12,7 +12,7 @@ contract VotesContainerCompat {
     function initialize(address[] calldata containers, address owner) external {
         uint256 _totalContainers = containers.length;
         for (uint i; i < _totalContainers; i++) {
-            if (OwnableUpgradeable(containers[i]).owner() == address(0)) {
+            if (OwnableUpgradeable(containers[i]).owner() != address(0)) {
                 revert VotesContainerAlreadyInitialized();
             }
 
