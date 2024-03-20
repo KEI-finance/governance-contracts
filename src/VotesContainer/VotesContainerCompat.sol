@@ -9,12 +9,15 @@ contract VotesContainerCompat {
 
     error VotesContainerAlreadyInitialized();
 
-    function initialize(address container, address owner) external {
-        if (OwnableUpgradeable(container).owner() == address(0)) {
-            revert VotesContainerAlreadyInitialized();
-        }
+    function initialize(address[] calldata containers, address owner) external {
+        uint256 _totalContainers = containers.length;
+        for (uint i; i < _totalContainers; i++) {
+            if (OwnableUpgradeable(containers[i]).owner() == address(0)) {
+                revert VotesContainerAlreadyInitialized();
+            }
 
-        IVotesContainer(container).initialize();
-        OwnableUpgradeable(container).transferOwnership(owner);
+            IVotesContainer(containers[i]).initialize();
+            OwnableUpgradeable(containers[i]).transferOwnership(owner);
+        }
     }
 }
