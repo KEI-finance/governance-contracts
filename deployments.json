@@ -2,6 +2,10 @@
   "5": {
     "VotesContainer": "0x8069D509b03BE2DC191DF198652D071Bb7220fCD"
   },
+  "8453": {
+    "VotesContainer": "0x8069d509b03be2dc191df198652d071bb7220fcd",
+    "VotesContainerCompat": "0x7541efc41479f2456daa2d71769a28fdf083a696"
+  },
   "42161": {
     "VotesContainerCompat": "0x7541EfC41479f2456DAA2d71769A28fdf083A696",
     "VotesContainer": "0x8069D509b03BE2DC191DF198652D071Bb7220fCD"
