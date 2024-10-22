@@ -6,29 +6,36 @@ import {BaseTest} from "@kei.fi/testing-lib/BaseTest.sol";
 
 import {DeployScript} from "script/Deploy.s.sol";
 
-contract DeployTest is BaseTest {
+contract DeployTest is BaseTest, DeployScript {
+    function setUp() public virtual override {
+        super.setUp();
+    }
+}
+
+contract DeployTest__run is DeployTest {
     struct ExpectDeployment {
         string name;
         address addr;
     }
 
-    ExpectDeployment[] internal expected;
+    mapping(uint256 => ExpectDeployment[]) internal expected;
 
-    function setUp() external {
-        expected.push(ExpectDeployment("VotesContainer.sol", 0x8069D509b03BE2DC191DF198652D071Bb7220fCD));
+    function setUp() public virtual override {
+        super.setUp();
+
+        // forge test network
+        expected[31337].push(ExpectDeployment("VotesContainer", 0x8069D509b03BE2DC191DF198652D071Bb7220fCD));
+        // abitrum network
+        expected[42161].push(ExpectDeployment("VotesContainer", 0x0000000000000000000000000000000000000000));
+        // sepolia network
+        expected[11155111].push(ExpectDeployment("VotesContainer", 0x0000000000000000000000000000000000000000));
     }
 
-    function test_deploy() external {
-        vm.chainId(5);
-
-        DeployScript script = new DeployScript();
-
-        script.setUp();
-        script.run();
-
-        for (uint256 i; i < expected.length; i++) {
-            ExpectDeployment memory expectedDeployment = expected[i];
-            address deployment = script.deployment(expectedDeployment.name);
+    function assert_deployments() public {
+        ExpectDeployment[] memory deployments = expected[block.chainid];
+        for (uint256 i; i < deployments.length; i++) {
+            ExpectDeployment memory expectedDeployment = deployments[i];
+            address deployment = deployment[expectedDeployment.name];
             assertEq(
                 deployment,
                 expectedDeployment.addr,
@@ -41,5 +48,10 @@ contract DeployTest is BaseTest {
                 )
             );
         }
+    }
+
+    function test_deploy() external {
+        run();
+        assert_deployments();
     }
 }

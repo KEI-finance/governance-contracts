@@ -1,18 +1,14 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.13;
-
-import {Script, stdJson} from "forge-std/Script.sol";
+pragma solidity =0.8.20;
 
 import "./Base.s.sol";
 
 contract DeployScript is BaseScript {
     using stdJson for string;
 
-    function run() public {
-        vm.startBroadcast(deployer);
-
-        deploy("VotesContainer.sol");
-        deploy("VotesContainerCompat.sol");
+    function run() public record {
+        deploy("VotesContainer");
+        deploy("VotesContainerCompat");
 
         //        RedeemableCard card = RedeemableCard(deploy("RedeemableCard.sol", abi.encode(deployer), false));
         //        ConsumableProvider provider = ConsumableProvider(deploy("ConsumableProvider.sol", abi.encode(deployer)));
@@ -24,7 +20,5 @@ contract DeployScript is BaseScript {
         //
         //        manager.grantRole(manager.DEFAULT_ADMIN_ROLE(), config.admin);
         //        manager.renounceRole(manager.DEFAULT_ADMIN_ROLE(), deployer);
-
-        vm.stopBroadcast();
     }
 }

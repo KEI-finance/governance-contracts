@@ -1,20 +1,47 @@
+<<<<<<< HEAD
 name: test
 
 on: workflow_dispatch
+=======
+name: Test
+
+on:
+  pull_request:
+    branches:
+      - master
+  workflow_dispatch:
+>>>>>>> template/master
 
 env:
   FOUNDRY_PROFILE: ci
 
+<<<<<<< HEAD
 jobs:
   check:
     strategy:
       fail-fast: true
 
     name: Foundry project
+=======
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check-test:
+    strategy:
+      fail-fast: true
+
+    name: Forge Project
+>>>>>>> template/master
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
+<<<<<<< HEAD
+=======
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+>>>>>>> template/master
           submodules: recursive
 
       - name: Install Foundry
@@ -30,5 +57,53 @@ jobs:
 
       - name: Run Forge tests
         run: |
+<<<<<<< HEAD
           forge test -vvv
         id: test
+=======
+          make test
+        id: test
+  
+  check-template:
+    name: Check Template
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_ACCESS_TOKEN }}
+          fetch-depth: 0
+
+      - name: Check Template
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+
+          # Checkout the HEAD of the current branch
+          git checkout ${{ github.head_ref || github.ref_name }}
+
+          # Store the current commit hash
+          CURRENT_COMMIT=$(git rev-parse HEAD)
+          
+          # Perform the sync
+          make sync
+
+          # Check for conflicts
+          if git status | grep -q 'both modified:'; then
+            echo "Error: Conflicts detected during sync."
+            echo "Please resolve conflicts manually and commit the changes before proceeding."
+            exit 1
+          fi
+          
+          # Get the new commit hash after sync
+          NEW_COMMIT=$(git rev-parse HEAD)
+          
+          # Compare the commit hashes
+          if [ "$CURRENT_COMMIT" != "$NEW_COMMIT" ]; then
+            echo "Error: The repository is not up to date with the template."
+            echo "Please sync with the template and commit the changes before proceeding."
+            exit 1
+          fi
+          
+          echo "Repository is up to date with the template."
+
+>>>>>>> template/master
