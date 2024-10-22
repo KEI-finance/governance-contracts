@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-name: test
-
-on: workflow_dispatch
-=======
 name: Test
 
 on:
@@ -10,19 +5,10 @@ on:
     branches:
       - master
   workflow_dispatch:
->>>>>>> template/master
 
 env:
   FOUNDRY_PROFILE: ci
 
-<<<<<<< HEAD
-jobs:
-  check:
-    strategy:
-      fail-fast: true
-
-    name: Foundry project
-=======
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -33,15 +19,11 @@ jobs:
       fail-fast: true
 
     name: Forge Project
->>>>>>> template/master
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
-<<<<<<< HEAD
-=======
           token: ${{ secrets.GH_ACCESS_TOKEN }}
->>>>>>> template/master
           submodules: recursive
 
       - name: Install Foundry
@@ -57,10 +39,6 @@ jobs:
 
       - name: Run Forge tests
         run: |
-<<<<<<< HEAD
-          forge test -vvv
-        id: test
-=======
           make test
         id: test
   
@@ -106,4 +84,3 @@ jobs:
           
           echo "Repository is up to date with the template."
 
->>>>>>> template/master
