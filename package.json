@@ -1,6 +1,6 @@
 {
   "name": "@kei.fi/governance-contracts",
-  "version": "1.0.0-compat.2",
+  "version": "1.0.1",
   "author": "KEI finance",
   "license": "UNLICENSED",
   "exports": {
