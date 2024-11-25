@@ -22,16 +22,16 @@ single_line_statement_blocks = 'preserve'
 ignore = ["src/console.sol", "src/console2.sol"]
 
 [rpc_endpoints]
-sepolia = "https://eth-sepolia.blastapi.io/v3/${BLAST_API_KEY}"
-mainnet = "https://eth-mainnet.blastapi.io/v3/${BLAST_API_KEY}"
-base_mainnet = "https://base-mainnet.blastapi.io/v3/${BLAST_API_KEY}"
-base_sepolia = "https://base-sepolia.blastapi.io/v3/${BLAST_API_KEY}"
-arbitrum = "https://arbitrum-one.blastapi.io/v3/${BLAST_API_KEY}"
-arbitrum_sepolia = "https://arbitrum-sepolia.blastapi.io/v3/${BLAST_API_KEY}"
-avalanche = "https://ava-mainnet.blastapi.io/v3/${BLAST_API_KEY}"
-avalanche_testnet = "https://ava-testnet.blastapi.io/v3/${BLAST_API_KEY}"
-polygon = "https://polygon-mainnet.blastapi.io/v3/${BLAST_API_KEY}"
-polygon_amoy = "https://polygon-amoy.blastapi.io/v3/${BLAST_API_KEY}"
+sepolia = "https://eth-sepolia.blastapi.io/${BLAST_API_KEY}"
+mainnet = "https://eth-mainnet.blastapi.io/${BLAST_API_KEY}"
+base_mainnet = "https://base-mainnet.blastapi.io/${BLAST_API_KEY}"
+base_sepolia = "https://base-sepolia.blastapi.io/${BLAST_API_KEY}"
+arbitrum = "https://arbitrum-one.blastapi.io/${BLAST_API_KEY}"
+arbitrum_sepolia = "https://arbitrum-sepolia.blastapi.io/${BLAST_API_KEY}"
+avalanche = "https://ava-mainnet.blastapi.io/${BLAST_API_KEY}"
+avalanche_testnet = "https://ava-testnet.blastapi.io/${BLAST_API_KEY}"
+polygon = "https://polygon-mainnet.blastapi.io/${BLAST_API_KEY}"
+polygon_amoy = "https://polygon-amoy.blastapi.io/${BLAST_API_KEY}"
 
 [dependencies]
 "@kei-fi-testing-lib" = "1.0.2"
