@@ -32,7 +32,7 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install pnpm
+      - name: Install PNPM
         uses: pnpm/action-setup@v2
         with:
           version: 8
@@ -42,8 +42,9 @@ jobs:
         with:
           version: nightly-d14a7b44fc439407d761fccc4c1637216554bbb6
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile && \
+      - name: Install Dependencies
+        run: |
+          pnpm install --frozen-lockfile
           forge soldeer install --clean
 
       - name: Run Forge build
