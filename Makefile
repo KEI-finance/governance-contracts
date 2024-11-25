@@ -144,7 +144,7 @@ soldeer-publish:
 	cp README.md ./src/README.md && \
 	VERSION=$$(node -p "require('./src/package.json').version"); \
 	PACKAGE=$$(node -p "require('./src/package.json').name.replace(/[\.\-\/]/g, '-')"); \
-	if soldeer push $$PACKAGE~$$VERSION src/; then \
+	if forge soldeer push $$PACKAGE~$$VERSION src/; then \
 		echo "Successfully published $$PACKAGE version $$VERSION"; \
 	else \
 		echo "Failed to publish $$PACKAGE version $$VERSION"; \
