@@ -10,7 +10,7 @@ endif
 ENV ?= develop
 CHAIN ?= sepolia
 ETHERSCAN_API_KEY ?= ""
-INFURA_API_KEY ?= ""
+BLAST_API_KEY ?= ""
 
 # Decode secrets file if it exists
 ifneq (,$(wildcard secrets/secrets.$(ENV).env))
