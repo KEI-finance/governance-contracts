@@ -37,18 +37,18 @@ jobs:
         with:
           version: 8
 
-      - name: Install dependencies
-        run: pnpm install
-
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
         with:
           version: nightly-d14a7b44fc439407d761fccc4c1637216554bbb6
 
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile && \
+          forge soldeer install --clean
+
       - name: Run Forge build
         run: |
           forge --version
-          forge soldeer install --clean
           forge build --sizes
         id: build
 
