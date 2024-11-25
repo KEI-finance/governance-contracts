@@ -24,7 +24,7 @@ contract DeployTest__run is DeployTest {
         super.setUp();
 
         // forge test network
-        expected[31337].push(ExpectDeployment("Counter", 0xBe7AC52D4e460b465cdd8ff939275Df60Ee17483));
+        expected[31337].push(ExpectDeployment("Counter", 0xEf286AbDF2Ac31D9ed831C01a2B8D16815567AD6));
         // abitrum network
         expected[42161].push(ExpectDeployment("Counter", 0x0000000000000000000000000000000000000000));
         // sepolia network
