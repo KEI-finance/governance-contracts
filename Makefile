@@ -14,7 +14,7 @@ INFURA_API_KEY ?= ""
 
 # Decode secrets file if it exists
 ifneq (,$(wildcard secrets/secrets.$(ENV).env))
-    $(shell (sops -d secrets/secrets.$(ENV).env > .env.secrets) || (echo "Error decoding secrets file" >&2))
+    $(shell (sops -d secrets/secrets.$(ENV).env > .env.secrets 2>/dev/null) || (echo "Proceeding without secrets file" >&2))
     -include .env.secrets
     export
     $(shell rm -f .env.secrets)
@@ -39,7 +39,7 @@ endef
 
 compile:
 	@echo "Compiling contracts..."
-	npx tsc >> /dev/null || true
+	@npx tsc >> /dev/null || true
 
 # Deploy to selected chain and environment
 deploy:
@@ -57,33 +57,33 @@ deploy-resume:
 
 deploy-tag:
 	@echo "Tagging deployment to $(ENV) environment"
-	forge-utils append-meta --meta.env $(ENV) --new-files
-	git reset
-	git add broadcast
-	git commit -m "🚀🔥 DEPLOYED: $(CHAIN) network, $(ENV) environment 🌍💥"
+	@forge-utils append-meta --meta.env $(ENV) --new-files
+	@git reset
+	@git add broadcast
+	@git commit -m "🚀🔥 DEPLOYED: $(CHAIN) network, $(ENV) environment 🌍💥"
 
 compile-clean:
 	@echo "Cleaning compiled utils..."
-	rm ./utils/**/*.js >> /dev/null || true
+	@rm -f ./utils/**/*.js 2>/dev/null || true
 
 # Clean TypeChain artifacts
 typechain-clean:
 	@echo "Cleaning TypeChain artifacts..."
-	rm -rf typechain
+	@rm -rf typechain
 
 # Generate TypeChain bindings for ethers-v6
 typechain-v6:
 	@echo "Generating TypeChain bindings for ethers-v6..."
-	npx typechain --target ethers-v6 --out-dir typechain/ethers-v6 "./out/*.sol/*.json" --show-stack-traces >> /dev/null || true
+	@npx typechain --target ethers-v6 --out-dir typechain/ethers-v6 "./out/*.sol/*.json" --show-stack-traces >> /dev/null || true
 
 # Generate TypeChain bindings for ethers-v5
 typechain-v5:
 	@echo "Generating TypeChain bindings for ethers-v5..."
-	npx typechain --target ethers-v5 --out-dir typechain/ethers-v5 "./out/*.sol/*.json" --show-stack-traces >> /dev/null || true
+	@npx typechain --target ethers-v5 --out-dir typechain/ethers-v5 "./out/*.sol/*.json" --show-stack-traces >> /dev/null || true
 
 clean-typechain-bytecode:
 	@echo "Cleaning TypeChain bytecode..."
-	forge-utils clean-typechain-bytecode
+	@forge-utils clean-typechain-bytecode
 
 # Generate all TypeChain bindings
 typechain: typechain-clean typechain-v6 typechain-v5 clean-typechain-bytecode
@@ -92,30 +92,31 @@ typechain: typechain-clean typechain-v6 typechain-v5 clean-typechain-bytecode
 setup:
 	@echo "Setting up the project..."
 
-	$(MAKE) clean
-	pnpm install
-	forge clean
-	forge install
-	forge build --skip script test
-	$(MAKE) typechain
-	$(MAKE) compile
-	forge-utils deployments
-	git add deployments.json > /dev/null || true
+	@$(MAKE) clean
+	@pnpm install
+	@forge clean
+	@forge install
+	@soldeer install --clean
+	@forge build --skip script test
+	@$(MAKE) typechain
+	@$(MAKE) compile
+	@forge-utils deployments
+	@git add deployments.json > /dev/null || true
 
 
 forge-clean:
 	@echo "Cleaning forge build..."
-	forge clean
+	@forge clean
 
 # Clean build artifacts
 clean:
-	$(MAKE) forge-clean >> /dev/null || true
-	$(MAKE) compile-clean >> /dev/null || true
-	$(MAKE) typechain-clean >> /dev/null || true
+	@$(MAKE) forge-clean >> /dev/null || true
+	@$(MAKE) compile-clean >> /dev/null || true
+	@$(MAKE) typechain-clean >> /dev/null || true
 
 test:
 	@echo "Running tests..."
-	forge test -vvv
+	@forge test -vvv
 
 # Print environment variables
 print-env:

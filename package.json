@@ -40,5 +40,9 @@
   },
   "dependencies": {
     "forge-utils": "^0.2.9"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
   }
 }
