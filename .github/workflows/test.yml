@@ -1,6 +1,9 @@
 name: Test
 
 on:
+  push:
+    branches:
+      - master
   pull_request:
     branches:
       - master
@@ -8,6 +11,7 @@ on:
 
 env:
   FOUNDRY_PROFILE: ci
+  BLAST_API_KEY: ${{ secrets.BLAST_API_KEY }}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -26,10 +30,25 @@ jobs:
           token: ${{ secrets.GH_ACCESS_TOKEN }}
           submodules: recursive
 
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install PNPM
+        uses: pnpm/action-setup@v2
+        with:
+          version: 9
+
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
         with:
-          version: nightly
+          version: nightly-d14a7b44fc439407d761fccc4c1637216554bbb6
+
+      - name: Install Dependencies
+        run: |
+          pnpm install --frozen-lockfile
+          forge soldeer install --clean
 
       - name: Run Forge build
         run: |
@@ -41,10 +60,27 @@ jobs:
         run: |
           make test
         id: test
+
+      - name: Publish to NPM
+        if: github.ref == 'refs/heads/master'
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+          npm publish --access public || echo "Failed to publish to NPM (possibly already published)"
+        continue-on-error: true
+
+      - name: Soldeer Publish
+        if: github.ref == 'refs/heads/master'
+        run: |
+          mkdir -p ~/.soldeer
+          echo "${{ secrets.SOLDEER_AUTH }}" > ~/.soldeer/.soldeer_login
+          make soldeer-publish
+        id: soldeer-publish
+        continue-on-error: true
   
   check-template:
     name: Check Template
     runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/master'
     steps:
       - uses: actions/checkout@v3
         with:
@@ -83,4 +119,3 @@ jobs:
           fi
           
           echo "Repository is up to date with the template."
-

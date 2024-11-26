@@ -14,5 +14,19 @@ docs/
 
 # Dotenv file
 .env
+.env.secrets
 
 typechain*
+
+# IDE files
+.vscode/
+
+utils/**/*.js
+src/**/*.js
+
+!.prettierrc.js
+
+# soldeer dependencies
+dependencies/
+
+.DS_Store

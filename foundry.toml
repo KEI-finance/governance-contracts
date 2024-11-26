@@ -22,17 +22,19 @@ single_line_statement_blocks = 'preserve'
 ignore = ["src/console.sol", "src/console2.sol"]
 
 [rpc_endpoints]
-sepolia = "https://sepolia.infura.io/v3/${INFURA_API_KEY}"
-mainnet = "https://mainnet.infura.io/v3/${INFURA_API_KEY}"
-base_mainnet = "https://base-mainnet.infura.io/v3/${INFURA_API_KEY}"
-base_sepolia = "https://base-sepolia.infura.io/v3/${INFURA_API_KEY}"
-arbitrum = "https://arbitrum-mainnet.infura.io/v3/${INFURA_API_KEY}"
-arbitrum_sepolia = "https://arbitrum-sepolia.infura.io/v3/${INFURA_API_KEY}"
+sepolia = "https://eth-sepolia.blastapi.io/${BLAST_API_KEY}"
+mainnet = "https://eth-mainnet.blastapi.io/${BLAST_API_KEY}"
+base_mainnet = "https://base-mainnet.blastapi.io/${BLAST_API_KEY}"
+base_sepolia = "https://base-sepolia.blastapi.io/${BLAST_API_KEY}"
+arbitrum = "https://arbitrum-one.blastapi.io/${BLAST_API_KEY}"
+arbitrum_sepolia = "https://arbitrum-sepolia.blastapi.io/${BLAST_API_KEY}"
+avalanche = "https://ava-mainnet.blastapi.io/${BLAST_API_KEY}"
+avalanche_testnet = "https://ava-testnet.blastapi.io/${BLAST_API_KEY}"
+polygon = "https://polygon-mainnet.blastapi.io/${BLAST_API_KEY}"
+polygon_amoy = "https://polygon-amoy.blastapi.io/${BLAST_API_KEY}"
 
-[etherscan]
-sepolia = { key = "${ETHERSCAN_API_KEY}" }
-mainnet = { key = "${ETHERSCAN_API_KEY}" }
-base_mainnet = { key = "${ETHERSCAN_API_KEY}" }
-base_sepolia = { key = "${ETHERSCAN_API_KEY}" }
-arbitrum = { key = "${ARBISCAN_API_KEY}", chain = 42161 }
-arbitrum_sepolia = { key = "${ARBISCAN_API_KEY}", chain = 421614 }
+[dependencies]
+"@kei-fi-testing-lib" = "1.0.2"
+"@openzeppelin-contracts" = "5.0.2"
+forge-std = "1.9.4"
+"@openzeppelin-contracts-upgradeable" = "5.0.2"
